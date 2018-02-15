@@ -127,6 +127,8 @@ pub const _PI_CMD_PUD: u32 = 2;
 pub const _PI_CMD_READ: u32 = 3;
 pub const _PI_CMD_WRITE: u32 = 4;
 pub const _PI_CMD_PWM: u32 = 5;
+pub const _PI_CMD_PRS: u32 = 6;
+pub const _PI_CMD_PFS: u32 = 7;
 pub const _PI_CMD_SERVO: u32 = 8;
 
 pub const _PI_CMD_NB: u32 = 19;
@@ -426,6 +428,18 @@ impl Pi {
     pub fn get_pwm_dutycycle(&self, user_gpio: u32) -> i32 {
         to_i32(_pigpio_command(&self.control_stream,
                                _PI_CMD_GDC, user_gpio, 0))
+    }
+
+    pub fn set_pwm_range(&self, user_gpio: u32,
+                         range: u32) -> i32 {
+        to_i32(_pigpio_command(&self.control_stream,
+                               _PI_CMD_PRS, user_gpio, range))
+    }
+
+    pub fn set_pwm_frequency(&self, user_gpio: u32,
+                         freq: u32) -> i32 {
+        to_i32(_pigpio_command(&self.control_stream,
+                               _PI_CMD_PFS, user_gpio, freq))
     }
 
     pub fn set_servo_pulsewidth(&self, user_gpio: u32, 
